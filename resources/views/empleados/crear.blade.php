@@ -161,8 +161,9 @@
             }
             console.log(guardar)
             if(guardar){
-                console.log('vamos a guardar')
                 $('#formCrearEmpleado').submit();
+            } else {
+                alert('Recuerda llenar todos los campos necesarios')
             }
         })
     </script>

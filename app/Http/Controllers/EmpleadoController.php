@@ -19,7 +19,7 @@ class EmpleadoController extends Controller
         $empleados = Empleado::with(['area'])->get();
         //dd($empleados[0]->sexo);
 
-        return view('empleados.index',['empleados' => $empleados]);
+        return view('empleados.index',['empleados' => $empleados, 'mensaje' => 'Recuerda que puedes modificar o crear empleados']);
     }
 
     /**
@@ -103,8 +103,13 @@ class EmpleadoController extends Controller
      * @param  \App\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Empleado $empleado)
+    public function destroy(Request $request)
     {
         //
+        //dd($request);
+
+        $empleado = Empleado::find($request->id);
+        $empleado->delete();
+        return redirect('/listado');
     }
 }

@@ -21,3 +21,5 @@ Route::get('/crear', [EmpleadoController::class, 'create']);
 
 Route::post('/guardar',[EmpleadoController::class,'store']);
 
+Route::post('/eliminar/{id}',[EmpleadoController::class,'destroy']);
+

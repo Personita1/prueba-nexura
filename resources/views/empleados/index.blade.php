@@ -19,6 +19,7 @@
         <div class="container mt-4">
             <h4>Listado de empleados</h4>
             <a type="button" class="btn btn-primary float-end" id="btnCrear" href="/crear"><i class="fa-solid fa-user-plus"></i> Crear</a>
+            @csrf
             <table class="table table-striped">
                 <thead>
                     <tr class="text-center">
@@ -40,7 +41,7 @@
                         <td>{{ $empleado->area->nombre }}</td>
                         <td>{{ $empleado->boletin }}</td>
                         <td><button class="btn"> <i class="fa-solid fa-pen-to-square"></i> </button> </td>
-                        <td><button class="btn" > <i class="fa-solid fa-trash-can"></i> </button></td>
+                        <td><button class="btn" onclick="eliminar({{$empleado->id}})"> <i class="fa-solid fa-trash-can"></i> </button></td>
                     </tr>
                     @empty
                     <tr>
@@ -53,5 +54,25 @@
     </body>
 
     <script>
+        function eliminar(id) {
+            console.log(id)
+             $.ajax({
+                method:'POST',
+                url:'/eliminar/{id}',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id}
+                })
+            .done(function() {
+                alert( "Listo, empleado eliminado" )
+                location.reload()
+            })
+            .fail(function() {
+                alert( "No se pudo eliminar" );
+            })
+            .always(function() {
+                alert( "Terminado" );
+            });
+        }
     </script>
 </html>
