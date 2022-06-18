@@ -23,3 +23,7 @@ Route::post('/guardar',[EmpleadoController::class,'store']);
 
 Route::post('/eliminar/{id}',[EmpleadoController::class,'destroy']);
 
+Route::get('/editar/{id}',[EmpleadoController::class,'edit']);
+
+Route::post('/actualizar/{id}',[EmpleadoController::class,'update']);
+

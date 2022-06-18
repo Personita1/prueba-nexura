@@ -17,9 +17,11 @@ class EmpleadoController extends Controller
     public function index()
     {
         $empleados = Empleado::with(['area'])->get();
+        $roles = Roles::all();
+        $areas = Area::all();
         //dd($empleados[0]->sexo);
 
-        return view('empleados.index',['empleados' => $empleados, 'mensaje' => 'Recuerda que puedes modificar o crear empleados']);
+        return view('empleados.index',['empleados' => $empleados]);
     }
 
     /**
@@ -72,6 +74,7 @@ class EmpleadoController extends Controller
     public function show(Empleado $empleado)
     {
         //
+
     }
 
     /**
@@ -80,9 +83,15 @@ class EmpleadoController extends Controller
      * @param  \App\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function edit(Empleado $empleado)
+    public function edit(Request $request)
     {
         //
+        $roles = Roles::all();
+        $areas = Area::all();
+
+        $empleado = Empleado::find($request->id);
+
+        return view('empleados.editar',['empleado'=>$empleado, 'roles' => $roles, 'areas' => $areas]);
     }
 
     /**
@@ -95,6 +104,22 @@ class EmpleadoController extends Controller
     public function update(Request $request, Empleado $empleado)
     {
         //
+        $validated = $request->validate([
+            'nombre' => 'required|max:255',
+            'email' => 'required|email:rfc',
+            'area_id' => 'required',
+            'roles' => 'required',
+            'boletin' => 'boolean',
+            'sexo' => 'required'
+        ]);
+
+        $datosEmpleado = $request->except(['_token', 'roles']);
+        $datosEmpleado['boletin'] = array_key_exists('boletin', $datosEmpleado) ? 1 : 0;
+        $empleado = Empleado::where('id', $request->id)->update($datosEmpleado);
+
+        $empleadoAct = Empleado::find($request->id);
+        $empleadoAct->rol()->sync($request->roles);
+        return redirect('/listado');
     }
 
     /**

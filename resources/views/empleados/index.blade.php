@@ -40,7 +40,7 @@
                         <td>{{ $empleado->sexo  }}</td>
                         <td>{{ $empleado->area->nombre }}</td>
                         <td>{{ $empleado->boletin }}</td>
-                        <td><button class="btn"> <i class="fa-solid fa-pen-to-square"></i> </button> </td>
+                        <td><a class="btn" href="/editar/{{ $empleado->id }}"> <i class="fa-solid fa-pen-to-square"></i> </a> </td>
                         <td><button class="btn" onclick="eliminar({{$empleado->id}})"> <i class="fa-solid fa-trash-can"></i> </button></td>
                     </tr>
                     @empty
@@ -67,12 +67,13 @@
                 alert( "Listo, empleado eliminado" )
                 location.reload()
             })
-            .fail(function() {
-                alert( "No se pudo eliminar" );
+            .fail(function(msg) {
+                alert( "No se pudo eliminar por: " + msg );
             })
             .always(function() {
                 alert( "Terminado" );
             });
         }
+
     </script>
 </html>
