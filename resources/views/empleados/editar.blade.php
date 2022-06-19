@@ -19,8 +19,7 @@
         <div class="container pr-5 pl-5 mt-4">
             <h4>Editar empleado</h4>
             <div class="alert alert-info" role="alert">
-                Los campos con asteriscos (*) son obligatorios <br>
-                Recuerda volver a marcar Sexo, Roles, Boletín y volver a seleccionar el área del empleado
+                Los campos con asteriscos (*) son obligatorios
             </div>
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -49,13 +48,15 @@
                     <label for="checkSexo" class="col-sm-3 col-form-label fw-bold text-end"> Sexo * </label>
                     <div id="checkSexo" class="col-sm-9" >
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="sexo" id="inputMasc" value="M">
+                            <input class="form-check-input" type="radio" name="sexo" id="inputMasc" value="M" 
+                                @if($empleado->sexo == 'M') checked @endif>
                             <label class="form-check-label" for="inputMasc">
                                 Masculino
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="sexo" id="inputFem" value="F">
+                            <input class="form-check-input" type="radio" name="sexo" id="inputFem" value="F"
+                                @if($empleado->sexo == 'F') checked @endif>
                             <label class="form-check-label" for="inputFem">
                                 Femenino
                             </label>
@@ -67,7 +68,11 @@
                     <div id="selectArea" class="col-sm-9" >
                         <select class="form-select" name="area_id" aria-label="Default select example">
                             @forelse( $areas as $area )
-                            <option value="{{ $empleado->area->id }}">{{ $area->nombre }}</option>
+                            <option value="{{ $area->id }}" 
+                                @if($empleado->area_id == $area->id)
+                                selected
+                                @endif
+                            >{{ $area->nombre }}</option>
                             @empty
                             <option> No hay áreas </option>
                             @endforelse
@@ -78,7 +83,7 @@
                     <label for="inputDescripcion" class="col-sm-3 col-form-label fw-bold text-end">Descripción * </label>
                     <div class="col-sm-9">
                         <textarea class="form-control" id="inputDescripcion" 
-                            placeholder="Descripcion de  la experiencia del empleado" name="descripcion" value="{{ $empleado->descripcion }}"></textarea>
+                            placeholder="Descripcion de  la experiencia del empleado" name="descripcion" >{{ $empleado->descripcion }}</textarea>
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -97,7 +102,8 @@
                     <div class="row">
                         <label class="col-sm-3"></label>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="{{$rol->id}}" id="checkRol" name="roles[{{$rol->id}}]">
+                            <input class="form-check-input" type="checkbox" value="{{$rol->id}}" id="checkRol" name="roles[{{$rol->id}}]"
+                            @if(in_array($rol->id, $empleado->rol->pluck('id')->all())) checked @endif>
                             <label class="form-check-label" for="checkRol">
                                 {{ $rol->nombre }}
                             </label>

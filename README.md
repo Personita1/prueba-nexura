@@ -24,11 +24,7 @@ php artisan key:generate
 ```
 php artisan migrate
 ```
-- Install passport package
-```
-php artisan passport:install
-```
 - Run project server
 ```
-php artisan serv
+php artisan serve
 ```

@@ -115,10 +115,10 @@ class EmpleadoController extends Controller
 
         $datosEmpleado = $request->except(['_token', 'roles']);
         $datosEmpleado['boletin'] = array_key_exists('boletin', $datosEmpleado) ? 1 : 0;
-        $empleado = Empleado::where('id', $request->id)->update($datosEmpleado);
+        $empleado = Empleado::where('id', $request->id)->first();
+        $empleado->update($datosEmpleado);
 
-        $empleadoAct = Empleado::find($request->id);
-        $empleadoAct->rol()->sync($request->roles);
+        $empleado->rol()->sync($request->roles);
         return redirect('/listado');
     }
 

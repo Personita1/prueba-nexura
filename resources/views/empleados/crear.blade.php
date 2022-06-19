@@ -133,11 +133,16 @@
                 }
             })
             $('input#inputBoletin').removeClass('is-invalid')
+            $('input#inputBoletin').removeClass('is-valid')
+
             $('input#checkRol').each(function(i){
                 if($(this).is(':checked')){
                     $('input#checkRol').removeClass('is-invalid')
                     $(this).addClass('is-valid')
                     guardar = true
+                } else{
+                    $(this).removeClass('is-valid')
+                    $(this).addClass('is-invalid')
                 }
             })
             if(!$('textarea#inputDescripcion').val()){
@@ -164,6 +169,13 @@
                 $('#formCrearEmpleado').submit();
             } else {
                 alert('Recuerda llenar todos los campos necesarios')
+            }
+        })
+
+        $('input#checkRol').on('input', function(){
+            if($(this).is(':checked')){
+                $(this).removeClass('is-invalid');
+                $(this).addClass('is-valid');
             }
         })
     </script>

@@ -15,6 +15,10 @@ use App\Http\Controllers\RolesController;
 |
 */
 
+Route::get('/', function(){
+    return redirect('/listado');
+});
+
 Route::get('/listado', [EmpleadoController::class, 'index']);
 
 Route::get('/crear', [EmpleadoController::class, 'create']);
